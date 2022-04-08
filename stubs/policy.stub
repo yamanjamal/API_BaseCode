@@ -1,0 +1,95 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Auth\Access\HandlesAuthorization;
+use {{ namespacedModel }};
+use {{ namespacedUserModel }};
+use Gate;
+
+class {{ class }}
+{
+    use HandlesAuthorization;
+
+    /**
+     * Determine whether the user can view any models.
+     *
+     * @param  \{{ namespacedUserModel }}  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewAny({{ user }} $user)
+    {
+        return Gate::allows('{{ modelVariable }}_access');
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     *
+     * @param  \{{ namespacedUserModel }}  $user
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function view({{ user }} $user, {{ model }} ${{ modelVariable }})
+    {
+        return Gate::allows('{{ modelVariable }}_show');
+    }
+
+    /**
+     * Determine whether the user can create models.
+     *
+     * @param  \{{ namespacedUserModel }}  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function create({{ user }} $user)
+    {
+        return Gate::allows('{{ modelVariable }}_create');
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param  \{{ namespacedUserModel }}  $user
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function update({{ user }} $user, {{ model }} ${{ modelVariable }})
+    {
+        return Gate::allows('{{ modelVariable }}_update');
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param  \{{ namespacedUserModel }}  $user
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function delete({{ user }} $user, {{ model }} ${{ modelVariable }})
+    {
+        return Gate::allows('{{ modelVariable }}_delete');
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     *
+     * @param  \{{ namespacedUserModel }}  $user
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restore({{ user }} $user, {{ model }} ${{ modelVariable }})
+    {
+        return Gate::allows('{{ modelVariable }}_restore');
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     *
+     * @param  \{{ namespacedUserModel }}  $user
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function forceDelete({{ user }} $user, {{ model }} ${{ modelVariable }})
+    {
+        return Gate::allows('{{ modelVariable }}_forcedelete');
+    }
+}

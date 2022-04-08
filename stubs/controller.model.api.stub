@@ -1,0 +1,77 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ rootNamespace }}Http\Resources\{{ model }}Resource;
+use {{ namespacedModel }};
+use {{ namespacedRequests }}
+
+class {{ class }} extends BaseController
+{
+    public $paginate=10;
+       
+    public function __construct()
+    {
+        $this->authorizeResource({{model}}::class,'{{ modelVariable }}');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        ${{ modelVariable }}s = {{ model }}::paginate($this->paginate);
+        return $this->sendResponse({{ model }}Resource::collection(${{ modelVariable }}s)->response()->getData(true),'{{ model }}s sent sussesfully');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \{{ namespacedStoreRequest }}  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store({{ storeRequest }} $request)
+    {
+        ${{ modelVariable }} = {{ model }}::create($request->validated());
+        return $this->sendResponse(new {{ model }}Resource(${{ modelVariable }} ),'{{ model }} created sussesfully');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function show({{ model }} ${{ modelVariable }})
+    {
+        return $this->sendResponse(new {{ model }}Resource(${{ modelVariable }}),'{{ model }} shown sussesfully');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \{{ namespacedUpdateRequest }}  $request
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
+    {
+        ${{ modelVariable }}->update($request->validated());
+        return $this->sendResponse(new {{ model }}Resource(${{ modelVariable }}),'{{ model }} updated sussesfully');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy({{ model }} ${{ modelVariable }})
+    {
+        ${{ modelVariable }}->delete();
+        return $this->sendResponse(new {{ model }}Resource(${{ modelVariable }}),'{{ model }} deleted sussesfully');
+    }
+}
